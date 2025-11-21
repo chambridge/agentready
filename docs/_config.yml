@@ -2,11 +2,12 @@
 
 # Site settings
 title: AgentReady
-tagline: Repository Quality Assessment for AI-Assisted Development
+tagline: Build and Maintain Agent-Ready Codebases
 description: >-
-  Assess repositories against 25 evidence-based attributes that make codebases
-  more effective for AI-assisted development. Generate actionable reports with
-  specific remediation guidance.
+  Automated infrastructure generation and continuous quality assessment for
+  AI-assisted development. Bootstrap creates GitHub Actions, pre-commit hooks,
+  templates, and Dependabot in one command. Assess repositories against 25
+  evidence-based attributes with actionable remediation guidance.
 
 # Repository information
 repository: yourusername/agentready
@@ -36,6 +37,8 @@ navigation:
     url: /user-guide
   - title: Developer Guide
     url: /developer-guide
+  - title: Roadmaps
+    url: /roadmaps
   - title: Attributes
     url: /attributes
   - title: API Reference
