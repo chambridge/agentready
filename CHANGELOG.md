@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/ambient-code/agentready/compare/v1.3.0...v1.4.0) (2025-11-21)
+
+
+### Features
+
+* Add Repomix integration for AI-friendly repository context generation ([#29](https://github.com/ambient-code/agentready/issues/29)) ([92bdde1](https://github.com/ambient-code/agentready/commit/92bdde1f647ceb04c07d8eb7bec704fa44d3c34a)), closes [#24](https://github.com/ambient-code/agentready/issues/24) [#1](https://github.com/ambient-code/agentready/issues/1) [#25](https://github.com/ambient-code/agentready/issues/25) [hi#quality](https://github.com/hi/issues/quality) [hi#scoring](https://github.com/hi/issues/scoring)
+
 # [1.3.0](https://github.com/ambient-code/agentready/compare/v1.2.0...v1.3.0) (2025-11-21)
 
 
