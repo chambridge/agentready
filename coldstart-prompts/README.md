@@ -1,7 +1,7 @@
 # AgentReady Coldstart Implementation Prompts
 
 **Generated**: 2025-11-21
-**Total Prompts**: 16
+**Total Prompts**: 17
 **Source**: BACKLOG.md
 
 ---
@@ -24,7 +24,7 @@ These prompts are designed to be "drop in and go" - an AI agent or developer can
 
 ## Priority-Based Index
 
-### P0 (Critical) - 5 Items
+### P0 (Critical) - 6 Items
 
 | # | File | Title | Size | Status |
 |---|------|-------|------|--------|
@@ -33,6 +33,7 @@ These prompts are designed to be "drop in and go" - an AI agent or developer can
 | 03 | [03-bootstrap-agentready-repository-on-github.md](03-bootstrap-agentready-repository-on-github.md) | Bootstrap AgentReady Repository on GitHub | 11K | 🔴 Not Started |
 | 04 | [04-report-header-with-repository-metadata.md](04-report-header-with-repository-metadata.md) | Report Header with Repository Metadata | 6.8K | 🔴 Not Started |
 | 05 | [05-improve-html-report-design-font-size-color-scheme.md](05-improve-html-report-design-font-size-color-scheme.md) | Improve HTML Report Design (Font Size & Color Scheme) | 8.6K | 🔴 Not Started |
+| 17 | [17-add-bootstrap-quickstart-to-readme.md](17-add-bootstrap-quickstart-to-readme.md) | Add Bootstrap Quickstart to README.md | 7.2K | 🔴 Not Started |
 
 ### P1 (High) - 3 Items
 
@@ -160,13 +161,13 @@ python scripts/backlog_to_issues.py --all
 
 ## Statistics
 
-- **Total Features**: 16
-- **P0 (Critical)**: 5 features
+- **Total Features**: 17
+- **P0 (Critical)**: 6 features
 - **P1 (High)**: 3 features
 - **P2 (Medium)**: 3 features
 - **P3 (Important)**: 2 features
 - **P4 (Enhancement)**: 3 features
-- **Total Prompt Size**: ~130 KB
+- **Total Prompt Size**: ~138 KB
 - **Avg Prompt Size**: ~8.1 KB
 
 ---
