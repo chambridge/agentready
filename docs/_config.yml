@@ -74,6 +74,8 @@ exclude:
   - .sass-cache
   - .jekyll-cache
   - README.md
+  - DEPLOYMENT.md
+  - SETUP_SUMMARY.md
 
 # Site metadata
 version: 1.0.0
