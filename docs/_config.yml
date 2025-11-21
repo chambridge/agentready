@@ -102,8 +102,8 @@ certification_levels:
     emoji: "📈"
 
 # URLs
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+baseurl: "/agentready" # the subpath of your site
+url: "https://ambient-code.github.io" # the base hostname & protocol for your site
 
 # Analytics (optional - uncomment and add your ID)
 # google_analytics: UA-XXXXXXXXX-X
