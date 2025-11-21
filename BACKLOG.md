@@ -6,6 +6,228 @@
 
 ## Critical Issues (P0)
 
+### Bootstrap AgentReady Repository on GitHub
+
+**Priority**: P0 (Critical - Dogfooding)
+
+**Description**: Implement `agentready bootstrap` command to set up the agentready repository itself on GitHub with all best practices. This is the FIRST feature to implement - we'll dogfood our own tool!
+
+**Vision**: Use AgentReady to bootstrap the AgentReady repository - demonstrating the tool's value while setting up our own infrastructure.
+
+**Why P0**:
+- Demonstrates tool value immediately (dogfooding)
+- Sets up critical GitHub infrastructure (Actions, badges, PR templates)
+- Validates bootstrap command design before external users
+- Creates the foundation for GitHub App integration
+
+**Requirements**:
+
+1. **GitHub Repository Setup**
+   - Create/update repository on GitHub via `gh` CLI
+   - Set repository description and topics
+   - Configure repository settings (PR requirements, branch protection)
+
+2. **GitHub Actions Workflows**
+   - `.github/workflows/agentready-assessment.yml` - Run assessment on PR/push
+   - `.github/workflows/tests.yml` - Run pytest, linters
+   - `.github/workflows/release.yml` - Publish to PyPI (future)
+
+3. **GitHub Templates**
+   - `.github/ISSUE_TEMPLATE/bug_report.md`
+   - `.github/ISSUE_TEMPLATE/feature_request.md`
+   - `.github/PULL_REQUEST_TEMPLATE.md`
+   - `.github/CODEOWNERS`
+
+4. **Pre-commit Hooks**
+   - `.pre-commit-config.yaml` with black, isort, ruff
+   - Conventional commit linting (commitlint)
+   - Auto-run tests before commit
+
+5. **Dependency Management**
+   - Dependabot configuration (`.github/dependabot.yml`)
+   - Security scanning (`.github/workflows/security.yml`)
+
+6. **Documentation Updates**
+   - Update README.md with badges
+   - Add CONTRIBUTING.md
+   - Add CODE_OF_CONDUCT.md (Red Hat standard)
+   - Add LICENSE (Apache 2.0 or MIT)
+
+**Command Interface**:
+
+```bash
+# Bootstrap current repository on GitHub
+agentready bootstrap .
+
+# Bootstrap with specific language
+agentready bootstrap . --language python
+
+# Bootstrap and create GitHub repo
+agentready bootstrap . --create-repo redhat/agentready
+
+# Dry run (show what would be created)
+agentready bootstrap . --dry-run
+
+# Interactive mode (confirm each file)
+agentready bootstrap . --interactive
+```
+
+**What Gets Created**:
+
+```
+.github/
+├── workflows/
+│   ├── agentready-assessment.yml  # Run assessment on PR
+│   ├── tests.yml                  # Run tests and linters
+│   └── dependabot.yml            # Dependency updates
+├── ISSUE_TEMPLATE/
+│   ├── bug_report.md
+│   └── feature_request.md
+├── PULL_REQUEST_TEMPLATE.md
+├── CODEOWNERS
+└── dependabot.yml
+
+.pre-commit-config.yaml
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSE
+```
+
+**GitHub Actions Workflow Example**:
+
+```yaml
+# .github/workflows/agentready-assessment.yml
+name: AgentReady Assessment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+jobs:
+  assess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install AgentReady
+        run: |
+          pip install agentready
+
+      - name: Run Assessment
+        run: |
+          agentready assess . --verbose
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: agentready-reports
+          path: .agentready/
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('.agentready/report-latest.md', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: report
+            });
+```
+
+**Implementation Phases**:
+
+**Phase 1: Core Bootstrap** (This Sprint)
+- Implement `agentready bootstrap` command
+- Create template files for GitHub Actions, pre-commit, templates
+- Test on agentready repository itself
+- Commit all generated files
+
+**Phase 2: GitHub Integration** (Next Sprint)
+- Use `gh` CLI to create/update repository
+- Set up branch protection rules
+- Configure repository settings
+- Add repository badges
+
+**Phase 3: Language-Specific Templates** (Future)
+- Python-specific templates (pytest, black, mypy)
+- JavaScript-specific (eslint, prettier, jest)
+- Go-specific (golangci-lint, gotestsum)
+
+**Files to Create**:
+
+```
+src/agentready/
+├── cli/bootstrap.py           # Bootstrap CLI command
+├── bootstrap/
+│   ├── __init__.py
+│   ├── generator.py          # File generator
+│   ├── github_setup.py       # GitHub integration
+│   └── templates/            # Template files
+│       ├── github/
+│       │   ├── workflows/
+│       │   │   ├── agentready.yml.j2
+│       │   │   └── tests.yml.j2
+│       │   ├── ISSUE_TEMPLATE/
+│       │   └── PULL_REQUEST_TEMPLATE.md.j2
+│       ├── precommit.yaml.j2
+│       ├── CONTRIBUTING.md.j2
+│       └── CODE_OF_CONDUCT.md.j2
+tests/unit/test_bootstrap.py
+```
+
+**Acceptance Criteria**:
+
+- [ ] `agentready bootstrap .` creates all required files
+- [ ] GitHub Actions workflows are valid and functional
+- [ ] Pre-commit hooks install and run successfully
+- [ ] Repository badges added to README.md
+- [ ] Dry-run mode shows what would be created
+- [ ] Interactive mode prompts for confirmation
+- [ ] Successfully bootstrap agentready repository itself
+- [ ] All generated files committed to agentready repo
+- [ ] GitHub Actions runs assessment on every PR
+
+**Success Metrics**:
+
+- AgentReady repository on GitHub has:
+  - ✅ GitHub Actions running assessments
+  - ✅ PR template with checklist
+  - ✅ Issue templates for bugs/features
+  - ✅ Pre-commit hooks configured
+  - ✅ Dependabot enabled
+  - ✅ Repository badge showing score
+  - ✅ All linters passing in CI
+
+**Priority Justification**:
+
+This is P0 because:
+1. **Dogfooding** - We need this for our own repository first
+2. **Demonstrates value** - Shows AgentReady in action on itself
+3. **Foundation** - Required before GitHub App integration
+4. **Credibility** - Can't tell others to use it if we don't use it ourselves
+
+**Related**: GitHub App Integration (#5), Align Command (#3)
+
+**Notes**:
+- Start with Python-specific templates (our use case)
+- Keep templates simple and focused
+- Use Jinja2 for template rendering
+- Integrate with `gh` CLI for GitHub operations
+- All templates should pass AgentReady assessment!
+
+---
+
 ### Report Header with Repository Metadata
 
 **Priority**: P0 (Critical - Blocking Usability)
@@ -203,45 +425,6 @@ New (Professional):
 - This is the first thing users see - must be excellent
 - Consider adding screenshot to docs after redesign
 - Font size critical for presentations and stakeholder reviews
-
----
-
-## Future Features
-
-### Bootstrap New GitHub Repositories
-
-**Priority**: P5 (Future Enhancement)
-
-**Description**: Create functionality to bootstrap new GitHub repositories with agentready tooling and best practices from the start.
-
-**Requirements**:
-- Initialize new repository with agent-ready structure
-- Create initial CLAUDE.md, README, .gitignore from templates
-- Set up pre-commit hooks
-- Configure GitHub Actions for agentready assessment
-- Set up Dependabot
-- Create PR/Issue templates
-- Generate initial pyproject.toml or package.json with recommended dependencies
-
-**Use Case**:
-```bash
-# Bootstrap new repository
-agentready init --repo ambient-code/new-project --language python
-
-# This would:
-# 1. Create repository structure matching standard layout
-# 2. Add CLAUDE.md, README.md, .gitignore templates
-# 3. Configure CI/CD with agentready assessment workflow
-# 4. Set up development environment configuration
-```
-
-**Related**: Initial repository creation, onboarding automation
-
-**Notes**:
-- Should support multiple languages (Python, JavaScript, TypeScript, Go, Java)
-- Templates should be customizable
-- Could integrate with GitHub CLI (gh) for repository creation
-- Consider integration with `gh repo create` workflow
 
 ---
 
@@ -1205,9 +1388,8 @@ github:
 
 ## Priority Summary
 
-- **P0 (Critical)**: 2 items - Report Header Metadata, HTML Design Improvements
+- **P0 (Critical)**: 3 items - Bootstrap Command (FIRST!), Report Header Metadata, HTML Design Improvements
 - **P1 (Critical)**: 1 item - Align Subcommand
 - **P2 (High Value)**: 2 items - Interactive Dashboard, GitHub App Integration
 - **P3 (Important)**: 2 items - Report Schema Versioning, AgentReady Repository Agent
 - **P4 (Enhancement)**: 3 items - Research Report Utility, Repomix Integration, Customizable Themes
-- **P5 (Future)**: 1 item - Bootstrap New Repositories

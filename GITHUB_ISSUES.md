@@ -8,7 +8,144 @@
 
 ## P0 - Critical Issues (Blocking Adoption)
 
-### Issue #1: Add Report Header with Repository Metadata
+### Issue #1: Bootstrap AgentReady Repository on GitHub (DOGFOODING!)
+
+**Labels**: `P0-critical`, `feature`, `cli`, `github-integration`, `dogfooding`
+
+**Title**: Implement `agentready bootstrap` command and use it to set up agentready repository itself
+
+**Description**:
+
+**THIS IS THE FIRST FEATURE TO IMPLEMENT** - We'll dogfood our own tool by using it to bootstrap the agentready repository on GitHub!
+
+Build `agentready bootstrap` command that creates:
+- GitHub Actions workflows (assessment, tests, linters)
+- GitHub templates (issue templates, PR template, CODEOWNERS)
+- Pre-commit hooks (.pre-commit-config.yaml)
+- Dependabot configuration
+- Documentation (CONTRIBUTING.md, CODE_OF_CONDUCT.md, LICENSE)
+- Repository badges
+
+**Why This Is P0**:
+1. **Dogfooding** - We need this for agentready repo itself FIRST
+2. **Demonstrates Value** - Shows AgentReady in action on our own codebase
+3. **Foundation** - Required before GitHub App integration
+4. **Credibility** - Can't ask others to use it if we don't use it ourselves
+
+**Command Interface**:
+```bash
+# Bootstrap current repository
+agentready bootstrap .
+
+# Dry run (show what would be created)
+agentready bootstrap . --dry-run
+
+# Interactive mode (confirm each file)
+agentready bootstrap . --interactive
+```
+
+**What Gets Created**:
+```
+.github/
+├── workflows/
+│   ├── agentready-assessment.yml  # Run assessment on PR/push
+│   ├── tests.yml                  # Run pytest, black, isort, ruff
+│   └── security.yml              # Dependabot + security scanning
+├── ISSUE_TEMPLATE/
+│   ├── bug_report.md
+│   └── feature_request.md
+├── PULL_REQUEST_TEMPLATE.md
+├── CODEOWNERS
+└── dependabot.yml
+
+.pre-commit-config.yaml
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSE
+```
+
+**GitHub Actions - AgentReady Assessment Workflow**:
+```yaml
+name: AgentReady Assessment
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  assess:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install agentready
+      - run: agentready assess . --verbose
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agentready-reports
+          path: .agentready/
+      - name: Comment PR
+        if: github.event_name == 'pull_request'
+        # Post markdown report as PR comment
+```
+
+**Implementation**:
+
+**Files to Create**:
+- `src/agentready/cli/bootstrap.py` - CLI command
+- `src/agentready/bootstrap/generator.py` - File generator
+- `src/agentready/bootstrap/templates/` - Jinja2 templates
+  - `github/workflows/agentready.yml.j2`
+  - `github/workflows/tests.yml.j2`
+  - `github/ISSUE_TEMPLATE/bug_report.md.j2`
+  - `github/PULL_REQUEST_TEMPLATE.md.j2`
+  - `precommit.yaml.j2`
+  - `CONTRIBUTING.md.j2`
+- `tests/unit/test_bootstrap.py`
+
+**Implementation Phases**:
+
+**Phase 1**: Core Bootstrap (This Sprint)
+- [ ] Implement `agentready bootstrap` CLI command
+- [ ] Create template files (GitHub Actions, pre-commit, templates)
+- [ ] Add Jinja2 rendering
+- [ ] Test on agentready repository
+- [ ] Commit all generated files to agentready repo
+
+**Phase 2**: GitHub Integration (Future)
+- [ ] Use `gh` CLI to update repository settings
+- [ ] Set up branch protection
+- [ ] Add repository badges
+- [ ] Configure repository topics
+
+**Acceptance Criteria**:
+- [ ] `agentready bootstrap .` creates all files
+- [ ] GitHub Actions workflows are valid YAML
+- [ ] Pre-commit hooks install successfully
+- [ ] Dry-run mode shows preview
+- [ ] Interactive mode prompts for confirmation
+- [ ] **Successfully bootstrap agentready repository itself**
+- [ ] All generated files committed to agentready repo
+- [ ] GitHub Actions runs on next PR
+
+**Success Metrics**:
+After running `agentready bootstrap .` on agentready repo:
+- ✅ GitHub Actions workflow runs assessment on PRs
+- ✅ Pre-commit hooks prevent bad commits
+- ✅ Issue/PR templates guide contributors
+- ✅ Dependabot keeps dependencies updated
+- ✅ Repository badge shows AgentReady score
+- ✅ All linters pass in CI
+
+**Priority Justification**: We need to dogfood our own tool FIRST. This validates the bootstrap design and sets up critical infrastructure.
+
+**Related Issues**: #5 (GitHub App will enhance this), #3 (Align will complement this)
+
+---
+
+### Issue #2: Add Report Header with Repository Metadata
 
 **Labels**: `P0-critical`, `ux`, `reports`, `bug`
 
@@ -71,7 +208,7 @@ HTML Report Header:
 
 ---
 
-### Issue #2: Redesign HTML Report - Fix Font Sizes and Color Scheme
+### Issue #3: Redesign HTML Report - Fix Font Sizes and Color Scheme
 
 **Labels**: `P0-critical`, `ux`, `design`, `reports`, `accessibility`
 
@@ -137,7 +274,7 @@ h3: 20px → 26px
 
 ## P1 - Critical Features
 
-### Issue #3: Implement `agentready align` Subcommand for Automated Remediation
+### Issue #4: Implement `agentready align` Subcommand for Automated Remediation
 
 **Labels**: `P1-critical`, `feature`, `cli`, `automation`
 
@@ -232,13 +369,13 @@ Apply changes? [y/N]
 
 **Priority Justification**: Most requested feature. Dramatically improves value proposition.
 
-**Related**: Interactive Dashboard (#8)
+**Related**: Interactive Dashboard (#5), Bootstrap (#1)
 
 ---
 
 ## P2 - High Value Features
 
-### Issue #4: Create Interactive Dashboard with One-Click Remediation
+### Issue #5: Create Interactive Dashboard with One-Click Remediation
 
 **Labels**: `P2-high`, `feature`, `dashboard`, `ux`, `github-integration`
 
@@ -281,11 +418,11 @@ Transform static HTML report into interactive dashboard with:
 
 **Priority Justification**: Significantly improves workflow - users can fix issues with one click.
 
-**Related**: Align command (#3), GitHub App (#9)
+**Related**: Align command (#4), GitHub App (#6), Bootstrap (#1)
 
 ---
 
-### Issue #5: Implement GitHub App Integration (Badge & Status Checks)
+### Issue #6: Implement GitHub App Integration (Badge & Status Checks)
 
 **Labels**: `P2-high`, `feature`, `github-integration`, `ci-cd`
 
@@ -356,7 +493,7 @@ Provide GitHub integration for visibility and CI/CD workflows:
 
 ## P3 - Important Enhancements
 
-### Issue #6: Implement Report Schema Versioning
+### Issue #7: Implement Report Schema Versioning
 
 **Labels**: `P3-important`, `schema`, `contracts`, `backwards-compatibility`
 
@@ -388,7 +525,7 @@ Formalize report schemas and establish versioning to ensure backwards compatibil
 
 ---
 
-### Issue #7: Create AgentReady Repository Development Agent
+### Issue #8: Create AgentReady Repository Development Agent
 
 **Labels**: `P3-important`, `developer-experience`, `claude-code`
 
@@ -414,7 +551,7 @@ Create `.claude/agents/agentready-dev.md` agent with deep knowledge of AgentRead
 
 ## P4 - Nice-to-Have Enhancements
 
-### Issue #8: Build Research Report Generator/Updater Utility
+### Issue #9: Build Research Report Generator/Updater Utility
 
 **Labels**: `P4-enhancement`, `tooling`, `documentation`
 
@@ -437,7 +574,7 @@ Build CLI tool to validate and update research report:
 
 ---
 
-### Issue #9: Integrate Repomix for Repository Context Generation
+### Issue #10: Integrate Repomix for Repository Context Generation
 
 **Labels**: `P4-enhancement`, `ai-integration`, `tooling`
 
@@ -459,7 +596,7 @@ Integrate with Repomix (https://github.com/yamadashy/repomix) to generate reposi
 
 ---
 
-### Issue #10: Implement Customizable HTML Report Themes
+### Issue #11: Implement Customizable HTML Report Themes
 
 **Labels**: `P4-enhancement`, `ux`, `accessibility`, `theming`
 
@@ -488,26 +625,7 @@ Allow users to customize HTML report appearance:
 
 ## P5 - Future Enhancements
 
-### Issue #11: Bootstrap New GitHub Repositories with AgentReady
-
-**Labels**: `P5-future`, `feature`, `onboarding`
-
-**Title**: Create `agentready init` command to bootstrap new repositories with best practices
-
-**Description**:
-
-Generate new repository structure with AgentReady tooling:
-- `agentready init --repo my-project --language python`
-- Creates CLAUDE.md, README, .gitignore from templates
-- Sets up pre-commit hooks
-- Configures GitHub Actions
-
-**Acceptance Criteria**:
-- [ ] Support Python, JavaScript, TypeScript, Go, Java
-- [ ] Template customization
-- [ ] GitHub CLI integration
-
-**Priority Justification**: Valuable for onboarding, but lower priority than fixing existing repos.
+_No items currently - Bootstrap feature was promoted to P0 as Issue #1 (Dogfooding!)_
 
 ---
 
@@ -542,16 +660,17 @@ Create these labels in GitHub:
 
 ## Milestones
 
-**v1.1 - Critical UX Fixes** (Target: Week 1)
-- Issue #1: Report Header Metadata
-- Issue #2: HTML Design Improvements
+**v1.1 - Bootstrap & Critical UX** (Target: Sprint 1)
+- Issue #1: Bootstrap Command (FIRST - Dogfooding!)
+- Issue #2: Report Header Metadata
+- Issue #3: HTML Design Improvements
 
-**v1.2 - Automation & Integration** (Target: Week 2-3)
-- Issue #3: Align Subcommand
-- Issue #4: Interactive Dashboard (Phase 1)
-- Issue #5: GitHub App Integration (Phase 1)
+**v1.2 - Automation & Integration** (Target: Sprint 2-3)
+- Issue #4: Align Subcommand
+- Issue #5: Interactive Dashboard (Phase 1)
+- Issue #6: GitHub App Integration (Phase 1)
 
-**v1.3 - Polish & Documentation** (Target: Week 4+)
-- Issue #6: Schema Versioning
-- Issue #7: Development Agent
-- Issue #8-11: Enhancements
+**v1.3 - Polish & Documentation** (Target: Sprint 4+)
+- Issue #7: Schema Versioning
+- Issue #8: Development Agent
+- Issue #9-11: Enhancements
