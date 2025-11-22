@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/ambient-code/agentready/compare/v1.6.3...v1.7.0) (2025-11-22)
+
+
+### Bug Fixes
+
+* address P1 code quality issues from code review ([#38](https://github.com/ambient-code/agentready/issues/38)) ([77f2300](https://github.com/ambient-code/agentready/commit/77f23001881ed0f32dd845363e636f5a571348d3))
+
+
+### Features
+
+* Add security & quality improvements from code review ([#40](https://github.com/ambient-code/agentready/issues/40)) ([13cd3ca](https://github.com/ambient-code/agentready/commit/13cd3ca515a67a1c591a29d89499251006e80296))
+* redesign HTML report with dark theme and larger fonts ([#39](https://github.com/ambient-code/agentready/issues/39)) ([59f6702](https://github.com/ambient-code/agentready/commit/59f6702a3b44f825f6ef2c95beafdd197f8ae003)), closes [#8b5cf6](https://github.com/ambient-code/agentready/issues/8b5cf6) [#XX](https://github.com/ambient-code/agentready/issues/XX)
+
 ## [1.6.3](https://github.com/ambient-code/agentready/compare/v1.6.2...v1.6.3) (2025-11-22)
 
 
