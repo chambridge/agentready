@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/ambient-code/agentready/compare/v1.23.0...v1.24.0) (2025-11-23)
+
+
+### Features
+
+* Implement CodeSmellsAssessor stub (fixes [#87](https://github.com/ambient-code/agentready/issues/87)) ([#99](https://github.com/ambient-code/agentready/issues/99)) ([f06b2a8](https://github.com/ambient-code/agentready/commit/f06b2a84ad85355bdc0192887e3d157ed3446182))
+
 # [1.23.0](https://github.com/ambient-code/agentready/compare/v1.22.0...v1.23.0) (2025-11-23)
 
 
