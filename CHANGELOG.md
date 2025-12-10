@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/ambient-code/agentready/compare/v2.18.0...v2.19.0) (2025-12-10)
+
+
+### Features
+
+* add Memory MCP server allow list to repository settings ([#203](https://github.com/ambient-code/agentready/issues/203)) ([41d87bb](https://github.com/ambient-code/agentready/commit/41d87bb546fa2a30e9126bc7cf93a6fb6b6f5ae0))
+
 # [2.18.0](https://github.com/ambient-code/agentready/compare/v2.17.0...v2.18.0) (2025-12-10)
 
 
