@@ -1,3 +1,11 @@
+# [2.17.0](https://github.com/ambient-code/agentready/compare/v2.16.0...v2.17.0) (2025-12-10)
+
+
+### Features
+
+* enhance assessors with multi-language support and security ([#200](https://github.com/ambient-code/agentready/issues/200)) ([85712f2](https://github.com/ambient-code/agentready/commit/85712f242b10bfb6c195cddaca9ca7e57d453df8)), closes [#10](https://github.com/ambient-code/agentready/issues/10)
+* Harbor framework integration for Terminal-Bench evaluations ([#202](https://github.com/ambient-code/agentready/issues/202)) ([d73a8c8](https://github.com/ambient-code/agentready/commit/d73a8c851a72ae9185dd2c5d50c682c1f5e1ac06)), closes [#4](https://github.com/ambient-code/agentready/issues/4) [#178](https://github.com/ambient-code/agentready/issues/178) [#178](https://github.com/ambient-code/agentready/issues/178)
+
 # [2.16.0](https://github.com/ambient-code/agentready/compare/v2.15.0...v2.16.0) (2025-12-10)
 
 
