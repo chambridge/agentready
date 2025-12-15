@@ -1,3 +1,10 @@
+## [2.20.3](https://github.com/ambient-code/agentready/compare/v2.20.2...v2.20.3) (2025-12-15)
+
+
+### Bug Fixes
+
+* enable Harbor task filtering for smoketest support ([#222](https://github.com/ambient-code/agentready/issues/222)) ([f780188](https://github.com/ambient-code/agentready/commit/f7801884690d72b2e5e7f28145275ae78127e6d0))
+
 ## [2.20.2](https://github.com/ambient-code/agentready/compare/v2.20.1...v2.20.2) (2025-12-12)
 
 
