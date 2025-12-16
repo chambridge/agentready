@@ -117,7 +117,7 @@ jobs:
 
       - name: Extract metadata
         id: meta
-        uses: docker/metadata-action@v6
+        uses: docker/metadata-action@v5
         with:
           images: ghcr.io/ambient-code/agentready
           tags: |
@@ -143,19 +143,21 @@ jobs:
           VERSION: ${{ needs.release.outputs.version }}
           REPOSITORY: ${{ github.repository }}
         run: |
-          echo "## Container Published to GHCR" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📦 **Version**: $VERSION" >> $GITHUB_STEP_SUMMARY
-          echo "🐳 **Registry**: ghcr.io/$REPOSITORY" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Usage" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
-          echo "# Pull latest" >> $GITHUB_STEP_SUMMARY
-          echo "podman pull ghcr.io/$REPOSITORY:latest" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "# Pull specific version" >> $GITHUB_STEP_SUMMARY
-          echo "podman pull ghcr.io/$REPOSITORY:$VERSION" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "# Run assessment" >> $GITHUB_STEP_SUMMARY
-          echo "podman run --rm -v /path/to/repo:/repo:ro ghcr.io/$REPOSITORY:latest assess /repo --output-dir /tmp/out" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## Container Published to GHCR"
+            echo ""
+            echo "📦 **Version**: $VERSION"
+            echo "🐳 **Registry**: ghcr.io/$REPOSITORY"
+            echo ""
+            echo "### Usage"
+            echo "\`\`\`bash"
+            echo "# Pull latest"
+            echo "podman pull ghcr.io/$REPOSITORY:latest"
+            echo ""
+            echo "# Pull specific version"
+            echo "podman pull ghcr.io/$REPOSITORY:$VERSION"
+            echo ""
+            echo "# Run assessment"
+            echo "podman run --rm -v /path/to/repo:/repo:ro ghcr.io/$REPOSITORY:latest assess /repo --output-dir /tmp/out"
+            echo "\`\`\`"
+          } >> "$GITHUB_STEP_SUMMARY"
