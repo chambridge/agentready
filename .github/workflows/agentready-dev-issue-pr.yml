@@ -160,18 +160,13 @@ jobs:
             4. What would be the implementation approach?
 
             Based on your analysis, decide:
-            - If it makes sense to create a draft PR: Write OUTPUT=create_pr to /tmp/agentready-decision.txt
-            - If it doesn't make sense: Write OUTPUT=provide_feedback to /tmp/agentready-decision.txt
-
+            - If it makes sense to create a draft PR: Write OUTPUT=create_pr to .github/agentready-dev-logs/analysis-decision.txt
+            - If it doesn't make sense: Write OUTPUT=provide_feedback to .github/agentready-dev-logs/analysis-decision.txt
+            
             Write your reasoning (2-3 lines max) to .github/agentready-dev-logs/analysis-reasoning.txt
             Write a short branch name suggestion (e.g., "add-feature-x" or "fix-bug-y") to .github/agentready-dev-logs/analysis-branch.txt
-
-            Do NOT post any comment yet - you will review your output first.
-
-            Use bash commands to write these files:
-            echo "create_pr" > .github/agentready-dev-logs/analysis-decision.txt  # or "provide_feedback"
-            echo "Your reasoning here" > .github/agentready-dev-logs/analysis-reasoning.txt
-            echo "branch-name-suggestion" > .github/agentready-dev-logs/analysis-branch.txt
+            
+            Do NOT post any comment yet - you will self-review your analysis first.
 
       - name: Extract analysis decision
         if: steps.issue-context.outputs.skip_pr_creation != 'true'
