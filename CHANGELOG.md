@@ -1,3 +1,21 @@
+# [2.22.0](https://github.com/ambient-code/agentready/compare/v2.21.0...v2.22.0) (2025-12-16)
+
+
+### Bug Fixes
+
+* downgrade docker/metadata-action to v5 and fix shellcheck warnings ([12f5509](https://github.com/ambient-code/agentready/commit/12f55098049fa0bb70de3d65e11cabf8a9fab22e))
+* **workflows:** ensure post-comment step runs after Claude Code Action ([b087e5c](https://github.com/ambient-code/agentready/commit/b087e5ce53e68dcc67aa90eb394754c5f694e702))
+* **workflows:** handle all event types in agentready-dev workflow ([9b942bf](https://github.com/ambient-code/agentready/commit/9b942bf77f865c3924526d3b814d492ef945c0f3))
+* **workflows:** improve error handling and logging for comment posting ([9ea1e6b](https://github.com/ambient-code/agentready/commit/9ea1e6bc9c0a6381d855da0e235810203624bc54))
+* **workflows:** improve issue number extraction and add debug step ([ecd896b](https://github.com/ambient-code/agentready/commit/ecd896b9796bc40011f59ad621b70a10f678d08c))
+* **workflows:** remove if:always() to test step execution ([ff0bb12](https://github.com/ambient-code/agentready/commit/ff0bb1273fd4ad85b9cfad22fe1c555692bb23bc))
+* **workflows:** simplify post-comment step condition ([1bbf40a](https://github.com/ambient-code/agentready/commit/1bbf40a7a9d010939a90faa5092a3e097eb902c6))
+
+
+### Features
+
+* **workflows:** add comment posting for [@agentready-dev](https://github.com/agentready-dev) agent ([5dff614](https://github.com/ambient-code/agentready/commit/5dff614cbcf43153d9463524b680746fee2b6d5f))
+
 # [2.10.0](https://github.com/jeremyeder/agentready/compare/v2.9.0...v2.10.0) (2025-12-16)
 
 
